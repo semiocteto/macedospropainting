@@ -1,11 +1,1148 @@
 <!DOCTYPE html>
-   <html lang="pt-BR">
-   <head>
-     <meta charset="UTF-8">
-     <title>MACEDO'S PRO PAINTING - Huayra</title>
-   </head>
-   <body>
-     <h1>Painting and Carpentry Services</h1>
-     <p>Site under construction</p>
-   </body>
-   </html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Macedo's Pro Painting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #1a3c5e;
+      --accent: #e8a020;
+      --light: #f5f7fa;
+      --dark: #111;
+      --text: #444;
+      --white: #fff;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 70px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      color: var(--white);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      transition: background 0.3s !important;
+    }
+
+    .nav-cta:hover { background: #c8880f !important; color: var(--white) !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--white);
+      border-radius: 3px;
+      transition: all 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(26,60,94,0.88) 0%, rgba(10,25,40,0.75) 100%),
+        url('https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--white);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-content h1 span { color: var(--accent); }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.88);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { background: #c8880f; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid var(--white);
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      background: var(--accent);
+      padding: 18px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    .trust-bar .item {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ─── SECTIONS COMMON ─── */
+    section { padding: 90px 20px; }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 620px;
+      margin: 0 auto 60px;
+      line-height: 1.7;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--light); }
+
+    .about-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      object-fit: cover;
+      height: 420px;
+    }
+
+    .about-text h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-badges {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .badge {
+      background: var(--primary);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--white); }
+
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 40px 30px;
+      text-align: center;
+      border-top: 4px solid var(--accent);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .service-icon {
+      font-size: 2.6rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    /* ─── PORTFOLIO ─── */
+    #portfolio { background: var(--light); }
+
+    .portfolio-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 260px;
+      cursor: pointer;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .portfolio-item:hover img { transform: scale(1.07); }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,60,94,0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+    .portfolio-overlay span {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* ─── WHY US ─── */
+    #why { background: var(--primary); }
+
+    #why .section-title { color: var(--white); }
+    #why .section-subtitle { color: rgba(255,255,255,0.8); }
+
+    .why-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+
+    .why-item { padding: 30px 20px; }
+
+    .why-number {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .why-item h4 {
+      color: var(--white);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .why-item p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--white); }
+
+    .testimonials-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 36px 30px;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: var(--accent);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+      font-family: Georgia, serif;
+      opacity: 0.4;
+    }
+
+    .stars {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-card p {
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .author-info strong {
+      display: block;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .author-info span {
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--light); }
+
+    .contact-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .contact-item .icon {
+      font-size: 1.4rem;
+      margin-top: 2px;
+    }
+
+    .contact-item .detail strong {
+      display: block;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .contact-item .detail a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item .detail a:hover { color: var(--accent); }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--white);
+      padding: 16px 30px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .whatsapp-btn:hover { background: #1da851; transform: translateY(-2px); }
+
+    /* Form */
+    .contact-form {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .contact-form h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--dark);
+      transition: border-color 0.3s;
+      background: var(--white);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      padding: 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-submit:hover { background: var(--accent); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      padding: 50px 40px 30px;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand h3 {
+      color: var(--white);
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand h3 span { color: var(--accent); }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #25D366;
+      color: var(--white);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      z-index: 999;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.7);
+    }
+
+    /* ─── SCROLL TO TOP ─── */
+    .scroll-top {
+      position: fixed;
+      bottom: 100px;
+      right: 32px;
+      background: var(--primary);
+      color: var(--white);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 998;
+    }
+
+    .scroll-top.visible { opacity: 1; pointer-events: all; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0; right: 0;
+        background: var(--primary);
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+
+      .about-grid,
+      .contact-wrapper { grid-template-columns: 1fr; }
+
+      .about-img { height: 280px; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .trust-bar { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav>
+    <div class="nav-logo">Macedo's <span>Pro Painting</span></div>
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta">Free Quote</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>Professional Painting<br><span>You Can Trust</span></h1>
+      <p>Quality interior and exterior painting services for residential and commercial properties. Serving the area with pride, precision, and professionalism.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">📋 Get a Free Quote</a>
+        <a href="https://wa.me/1XXXXXXXXXX?text=Hi%20Pedro!%20I'd%20like%20to%20get%20a%20painting%20quote." class="btn-outline" target="_blank">💬 WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TRUST BAR ─── -->
+  <div class="trust-bar">
+    <div class="item">✅ Licensed & Insured</div>
+    <div class="item">⭐ 5-Star Rated</div>
+    <div class="item">🏠 10+ Years Experience</div>
+    <div class="item">🎨 100% Satisfaction Guarantee</div>
+    <div class="item">📞 Free Estimates</div>
+  </div>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="about-grid">
+      <img
+        src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80"
+        alt="Pedro Macedo painting"
+        class="about-img"
+      />
+      <div class="about-text">
+        <div class="section-label">About Us</div>
+        <h2>Hi, I'm Pedro Macedo</h2>
+        <p>
+          With over 10 years of experience in residential and commercial painting, I've built Macedo's Pro Painting on a foundation of quality craftsmanship, reliability, and honest communication with every client.
+        </p>
+        <p>
+          From a fresh coat on a single room to a full exterior transformation, we treat every project — big or small — with the same level of care and attention to detail. We use only premium paints and materials to ensure a long-lasting, beautiful finish.
+        </p>
+        <p>
+          <strong>[YOUR CITY/REGION] — [YOUR STATE]</strong><br/>
+          <em>Replace this with your actual service area.</em>
+        </p>
+        <div class="about-badges">
+          <span class="badge">🛡️ Fully Insured</span>
+          <span class="badge">📋 Free Estimates</span>
+          <span class="badge">🌱 Eco-Friendly Options</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-subtitle">We offer a full range of professional painting services tailored to your home or business needs.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🏠</span>
+        <h3>Interior Painting</h3>
+        <p>Transform your living spaces with expert color consulting and flawless application. Bedrooms, living rooms, kitchens — we handle it all with minimal disruption to your daily routine.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏗️</span>
+        <h3>Exterior Painting</h3>
+        <p>Boost your curb appeal and protect your home from the elements. We pressure wash, prep, prime, and paint using weather-resistant coatings built to last.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏢</span>
+        <h3>Commercial Painting</h3>
+        <p>Professional results for offices, retail spaces, and commercial buildings. We work around your schedule to minimize business downtime.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🪵</span>
+        <h3>Cabinet & Trim Painting</h3>
+        <p>Give your kitchen or bathroom a fresh new look without a full renovation. Smooth, factory-like finishes on cabinets, doors, and trim.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎨</span>
+        <h3>Deck & Fence Staining</h3>
+        <p>Protect and beautify your outdoor wood surfaces with premium stains and sealers. Extends the life of your deck and fence significantly.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">✨</span>
+        <h3>Color Consultation</h3>
+        <p>Not sure what color to choose? We offer professional color consulting to help you find the perfect palette for every room or exterior surface.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PORTFOLIO ─── -->
+  <section id="portfolio">
+    <div class="section-label">Our Work</div>
+    <h2 class="section-title">Recent Projects</h2>
+    <p class="section-subtitle">A glimpse of some recent jobs we're proud of. Replace these with your own project photos!</p>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=800&q=80" alt="Interior painting project" />
+        <div class="portfolio-overlay"><span>Interior — Living Room</span></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Exterior painting project" />
+        <div class="portfolio-overlay"><span>Exterior — Residential</span></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=800&q=80" alt="Cabinet painting" />
+        <div class="portfolio-overlay"><span>Cabinet Refinishing</span></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80" alt="Commercial project" />
+        <div class="portfolio-overlay"><span>Commercial — Office Space</span></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80" alt="Kitchen painting" />
+        <div class="portfolio-overlay"><span>Interior — Kitchen</span></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1567538096621-38d2284b23ff?w=800&q=80" alt="Deck staining" />
+        <div class="portfolio-overlay"><span>Deck Staining</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHY US ─── -->
+  <section id="why">
+    <div class="section-label" style="color:var(--accent)">Why Choose Us</div>
+    <h2 class="section-title">The Macedo's Difference</h2>
+    <p class="section-subtitle">We don't just paint walls — we deliver an experience from first call to final walkthrough.</p>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-number">10+</div>
+        <h4>Years in Business</h4>
+        <p>A decade of quality painting and satisfied customers across the region.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">500+</div>
+        <h4>Projects Completed</h4>
+        <p>From small rooms to large commercial buildings, we've done it all.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">100%</div>
+        <h4>Satisfaction Rate</h4>
+        <p>We don't consider a job done until you're completely happy.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">5★</div>
+        <h4>Average Rating</h4>
+        <p>Consistently top-rated on Google and other review platforms.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ─── -->
+  <section id="testimonials">
+    <div class="section-label">Reviews</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p class="section-subtitle">Don't just take our word for it — here's what homeowners and businesses say about working with us.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Pedro and his team did an amazing job on our entire first floor. Very professional, on time, and the results were stunning. We'll definitely hire them again!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JD</div>
+          <div class="author-info">
+            <strong>John D.</strong>
+            <span>Homeowner — [Your City]</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"We hired Macedo's for our office exterior. Excellent communication, fair pricing, and the paint job looks brand new. Highly recommend to any business owner!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SM</div>
+          <div class="author-info">
+            <strong>Sarah M.</strong>
+            <span>Business Owner — [Your City]</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Our kitchen cabinets look brand new. Pedro was meticulous and patient with our questions. The final result exceeded all our expectations. 5 stars!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RL</div>
+          <div class="author-info">
+            <strong>Robert L.</strong>
+            <span>Homeowner — [Your City]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Request a Free Quote</h2>
+    <p class="section-subtitle">Fill out the form below or reach us directly. We usually respond within a few hours.</p>
+
+    <div class="contact-wrapper">
+      <!-- Info -->
+      <div class="contact-info">
+        <h3>Contact Pedro Macedo</h3>
+        <p>Ready to transform your space? Reach out and we'll schedule a free, no-obligation estimate at your convenience.</p>
+
+        <div class="contact-item">
+          <span class="icon">📞</span>
+          <div class="detail">
+            <strong>Phone</strong>
+            <a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX — Replace with your number</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="icon">📧</span>
+          <div class="detail">
+            <strong>Email</strong>
+            <a href="mailto:pedro@macedospropainting.com">pedro@macedospropainting.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="icon">📍</span>
+          <div class="detail">
+            <strong>Service Area</strong>
+            <span>[Your City], [Your State] and surrounding areas</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="icon">🕐</span>
+          <div class="detail">
+            <strong>Hours</strong>
+            <span>Mon–Sat: 7:00am – 6:00pm</span>
+          </div>
+        </div>
+
+        <a
+          href="https://wa.me/1XXXXXXXXXX?text=Hi%20Pedro!%20I'd%20like%20to%20request%20a%20free%20painting%20quote."
+          class="whatsapp-btn"
+          target="_blank"
+        >
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form">
+        <h3>Get Your Free Estimate</h3>
+        <form action="https://formspree.io/f/XXXXXXXX" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service Needed</label>
+            <select id="service" name="service">
+              <option value="">— Select a service —</option>
+              <option>Interior Painting</option>
+              <option>Exterior Painting</option>
+              <option>Commercial Painting</option>
+              <option>Cabinet & Trim Painting</option>
+              <option>Deck & Fence Staining</option>
+              <option>Color Consultation</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project — size, rooms, timeline, any specific needs..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">📋 Send My Request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Macedo's <span>Pro Painting</span></h3>
+        <p>Professional painting services you can trust. Quality work, honest pricing, and a team that cares about your home as much as you do.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Interior Painting</a></li>
+          <li><a href="#services">Exterior Painting</a></li>
+          <li><a href="#services">Commercial Painting</a></li>
+          <li><a href="#services">Cabinet Painting</a></li>
+          <li><a href="#services">Deck Staining</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Free Quote</a></li>
+          <li><a href="https://wa.me/1XXXXXXXXXX" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Macedo's Pro Painting. All rights reserved.</span>
+      <span>Made with ❤️ for Pedro Macedo</span>
+    </div>
+  </footer>
+
+  <!-- ─── WHATSAPP FLOAT ─── -->
+  <a
+    href="https://wa.me/1XXXXXXXXXX?text=Hi%20Pedro!%20I'd%20like%20to%20request%20a%20free%20painting%20quote."
+    class="whatsapp-float"
+    target="_blank"
+    aria-label="WhatsApp"
+  >💬</a>
+
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+  <!-- ─── JS ─── -->
+  <script>
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('navLinks').classList.remove('open');
+        }
+      });
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card, .testimonial-card, .portfolio-item, .why-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
