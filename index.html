@@ -866,7 +866,16 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      nav { padding: 0 20px; height: 80px; }
+        nav { padding: 0 20px; height: 70px; }
+      
+        .nav-logo img {
+          height: 52px;
+        }
+      
+        nav.nav-scrolled .nav-logo img {
+          height: 44px;
+        }
+      }
 
       .nav-links {
         display: none;
