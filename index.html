@@ -940,6 +940,93 @@
     fill: var(--primary);
     }
 
+    /* ─── MODAL EM BREVE ─── */
+    .soon-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+
+    .soon-modal.open {
+      display: flex;
+    }
+
+    .soon-box {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-top: 5px solid var(--accent);
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .soon-icon {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .soon-box h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .soon-box p {
+      font-size: 0.97rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .soon-close {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .soon-close:hover {
+      background: var(--accent);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .soon-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #aaa;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .soon-modal-close:hover { color: var(--primary); }
+
   </style>
 </head>
 <body>
@@ -1368,6 +1455,20 @@
   <!-- SCROLL TO TOP -->
   <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
 
+  <!-- MODAL EM BREVE -->
+  <div id="soonModal" class="soon-modal">
+    <div class="soon-box">
+      <button class="soon-modal-close" id="soonModalClose">✕</button>
+      <span class="soon-icon">📸</span>
+      <h3 data-i18n="soon_title">Photos Coming Soon!</h3>
+      <p data-i18n="soon_desc">
+        We're still uploading photos and videos for this project.
+        Check back soon or contact us directly to see more of our work!
+      </p>
+      <button class="soon-close" id="soonCloseBtn" data-i18n="soon_btn">Got it!</button>
+    </div>
+  </div>
+
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox">
     <button class="lightbox-prev" id="lbPrev">&#8592;</button>
@@ -1382,7 +1483,7 @@
     <button class="lightbox-next" id="lbNext">&#8594;</button>
   </div>
 
-    <script>
+  <script>
   /* ── MENU ── */
   function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('open');
@@ -1505,7 +1606,10 @@
       foot_svc1:"Interior Painting", foot_svc2:"Exterior Painting",
       foot_svc3:"Cabinet Painting", foot_svc4:"Deck Staining", foot_svc5:"Power Washing", foot_svc6:"Light Carpentry",
       foot_l1:"About Us", foot_l2:"Portfolio", foot_l3:"Reviews", foot_l4:"Free Quote",
-      foot_rights:"All rights reserved.", foot_made:"Made with ❤️ for Pedro Macedo"
+      foot_rights:"All rights reserved.", foot_made:"Made with ❤️ for Pedro Macedo",
+      soon_title:"Photos Coming Soon!",
+      soon_desc:"We're still uploading photos and videos for this project. Check back soon or contact us directly to see more of our work!",
+      soon_btn:"Got it!",
     },
 
     pt: {
@@ -1577,7 +1681,10 @@
       foot_svc1:"Pintura Interior", foot_svc2:"Pintura Exterior",
       foot_svc3:"Pintura de Armários", foot_svc4:"Staining de Deck", foot_svc5:"Lavagem com Pressão", foot_svc6:"Pequenos Reparos (Carpintaria)",
       foot_l1:"Quem Somos", foot_l2:"Portfólio", foot_l3:"Avaliações", foot_l4:"Orçamento Gratuito",
-      foot_rights:"Todos os direitos reservados.", foot_made:"Feito com ❤️ para Pedro Macedo"
+      foot_rights:"Todos os direitos reservados.", foot_made:"Feito com ❤️ para Pedro Macedo", 
+      soon_title:"Fotos em Breve!",
+      soon_desc:"Ainda estamos fazendo o upload das fotos e vídeos deste projeto. Volte em breve ou entre em contato para ver mais do nosso trabalho!",
+      soon_btn:"Entendido!",
     }
   };
 
@@ -1625,12 +1732,32 @@
     .then(data => { photosData = data; })
     .catch(() => {});
 
+  const soonModal     = document.getElementById('soonModal');
+  const soonCloseBtn  = document.getElementById('soonCloseBtn');
+  const soonModalClose = document.getElementById('soonModalClose');
+
+  function openSoonModal() {
+    soonModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSoonModal() {
+    soonModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  soonCloseBtn.addEventListener('click', closeSoonModal);
+  soonModalClose.addEventListener('click', closeSoonModal);
+  soonModal.addEventListener('click', e => {
+    if (e.target === soonModal) closeSoonModal();
+  });
+
   document.querySelectorAll('.portfolio-item[data-category]').forEach(card => {
     card.addEventListener('click', () => {
       const cat  = card.dataset.category;
       const list = photosData[cat];
       if (!list || !list.length) {
-        alert('Em breve teremos mais fotos e vídeos de nossos projetos!');
+        openSoonModal();
         return;
       }
       currentList  = list;
