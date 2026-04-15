@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Macedo's Pro Painting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #12355B;
+      --accent:  #f0c23f;
+      --light:   #f5f7fa;
+      --dark:    #0a0f14;
+      --text:    #444;
+      --white:   #fff;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 160px;
+      z-index: 1000;
+      overflow: visible;
+      transition: background 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    nav.nav-scrolled {
+      background: linear-gradient(90deg, #12355B 0%, #1a6bbd 100%);
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    nav:not(.nav-scrolled) .nav-links a {
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .nav-logo img {
+      height: 140px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      transition: height 0.4s ease;
+    }
+
+    nav.nav-scrolled .nav-logo img {
+      height: 60px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: var(--primary) !important;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-weight: 800 !important;
+      transition: background 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: #d4a82e !important;
+      color: var(--primary) !important;
+      opacity: 0.85;
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lang-switcher button {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      color: var(--white);
+      padding: 3px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .lang-switcher button img {
+      width: 16px;
+      height: 11px;
+      border-radius: 2px;
+    }
+
+    .lang-switcher button.active,
+    .lang-switcher button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--primary);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--white);
+      border-radius: 3px;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(18,53,91,0.92) 0%, rgba(18,53,91,0.65) 100%),
+        url('images/cards/intro5.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--white);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-content h1 span { color: var(--accent); }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.88);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 12px 26px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { background: #d4a82e; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 12px 26px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 2px solid var(--white);
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      background: var(--primary);
+      padding: 18px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .trust-bar .item {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ─── SECTIONS COMMON ─── */
+    section { padding: 90px 20px; }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 620px;
+      margin: 0 auto 60px;
+      line-height: 1.7;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--light); }
+
+    .about-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(18,53,91,0.18);
+      object-fit: cover;
+      height: 420px;
+      border-left: 5px solid var(--accent);
+    }
+
+    .about-text h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-badges {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .badge {
+      background: var(--primary);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 2px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .badge:hover {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--white); }
+
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 40px 30px;
+      text-align: center;
+      border-top: 4px solid var(--accent);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(18,53,91,0.12);
+    }
+
+    .service-icon {
+      font-size: 2.6rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    /* ─── PORTFOLIO ─── */
+    #portfolio { background: var(--light); }
+
+    .portfolio-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 260px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(18,53,91,0.10);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .portfolio-item:hover img { transform: scale(1.07); }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(18,53,91,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+    .portfolio-overlay span {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      font-size: 2rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    .lightbox-prev:hover,
+    .lightbox-next:hover { background: rgba(255,255,255,0.30); }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 80vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-inner img,
+    .lightbox-inner video {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 6px;
+      display: block;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-caption {
+      color: var(--accent);
+      text-align: center;
+      font-weight: 700;
+      margin-top: 12px;
+      font-size: 1rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    /* ─── WHY US ─── */
+    #why {
+      background: linear-gradient(135deg, #12355B 0%, #1a4a80 100%);
+    }
+
+    #why .section-label { color: var(--accent); }
+    #why .section-title { color: var(--white); }
+    #why .section-subtitle { color: rgba(255,255,255,0.75); }
+
+    .why-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+
+    .why-item {
+      padding: 30px 20px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .why-item:hover { background: rgba(255,255,255,0.07); }
+
+    .why-number {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .why-item h4 {
+      color: var(--white);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .why-item p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--white); }
+
+    .testimonials-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 36px 30px;
+      position: relative;
+      border-bottom: 3px solid var(--accent);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(18,53,91,0.10);
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: var(--primary);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+      font-family: Georgia, serif;
+      opacity: 0.12;
+    }
+
+    .stars { color: var(--accent); font-size: 1.1rem; margin-bottom: 16px; }
+
+    .testimonial-card p {
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .author-info strong {
+      display: block;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .author-info span { font-size: 0.85rem; color: #888; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--light); }
+
+    .contact-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .contact-item .icon { font-size: 1.4rem; margin-top: 2px; }
+
+    .contact-item .detail strong {
+      display: block;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .contact-item .detail a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item .detail a:hover { color: var(--accent); }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--white);
+      padding: 12px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .whatsapp-btn:hover { background: #1da851; transform: translateY(-2px); }
+
+    .contact-form {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(18,53,91,0.10);
+      border-top: 4px solid var(--primary);
+    }
+
+    .contact-form h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--dark);
+      transition: border-color 0.3s;
+      background: var(--white);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      padding: 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.65);
+      padding: 50px 40px 30px;
+      border-top: 3px solid var(--primary);
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand img {
+      height: 80px;
+      width: auto;
+      margin-bottom: 16px;
+      object-fit: contain;
+    }
+
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; }
+
+    .footer-col h4 {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #25D366;
+      color: var(--white);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      z-index: 999;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.7);
+    }
+
+    /* ─── SCROLL TO TOP ─── */
+    .scroll-top {
+      position: fixed;
+      bottom: 100px;
+      right: 32px;
+      background: var(--primary);
+      color: var(--accent);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border: 2px solid var(--accent);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 998;
+    }
+
+    .scroll-top.visible { opacity: 1; pointer-events: all; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 80px; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0; right: 0;
+        background: var(--primary);
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+
+      .nav-right { gap: 8px; }
+      .lang-switcher button { font-size: 0.68rem; padding: 2px 5px; }
+      .lang-switcher button img { width: 14px; height: 9px; }
+
+      .about-grid,
+      .contact-wrapper { grid-template-columns: 1fr; }
+
+      .about-img { height: 280px; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .trust-bar { gap: 20px; }
+
+      .lightbox-inner { max-width: 95vw; }
+      .lightbox-prev  { left: 8px; }
+      .lightbox-next  { right: 8px; }
+    }
+
+    /* ─── SOCIAL ICONS ─── */
+    .social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    }
+
+    .social-links a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.2s;
+    text-decoration: none;
+    }
+
+    .social-links a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    }
+
+    .social-links a svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+    }
+
+    .social-links a:hover svg {
+    fill: var(--primary);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav>
+    <div class="nav-logo">
+      <img src="logo_v.png" alt="Macedo's Pro Painting Logo" />
+    </div>
+
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about"        data-i18n="nav_about">About</a></li>
+        <li><a href="#services"     data-i18n="nav_services">Services</a></li>
+        <li><a href="#portfolio"    data-i18n="nav_portfolio">Portfolio</a></li>
+        <li><a href="#testimonials" data-i18n="nav_reviews">Reviews</a></li>
+      </ul>
+
+      <div class="lang-switcher">
+        <button id="btn-en" class="active" onclick="setLang('en')">
+          <img src="https://flagcdn.com/us.svg" alt="EN"> EN
+        </button>
+        <button id="btn-pt" onclick="setLang('pt')">
+          <img src="https://flagcdn.com/br.svg" alt="PT"> PT
+        </button>
+      </div>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>
+        <span data-i18n="hero_line1">Professional Painting</span><br>
+        <span data-i18n="hero_line2">You Can Trust</span>
+      </h1>
+      <p data-i18n="hero_sub">
+        Quality interior and exterior painting services for residential and commercial properties.
+        Proudly serving Massachusetts and New Hampshire.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary" data-i18n="hero_cta1">📋 Get a Free Quote</a>
+        
+        <a href="sms:+16039430060" class="btn-outline">
+            <span style="font-size:1.1rem;">💬</span>
+            <span data-i18n="hero_cta3">Send a Text</span>
+        </a>
+        
+        <a href="https://wa.me/16039430060?text=Hi%20Pedro!%20I'd%20like%20to%20get%20a%20painting%20quote."
+            class="btn-outline" target="_blank">
+            <img src="whatsapp.svg" alt="WhatsApp" style="width:16px;height:16px;" />
+            <span data-i18n="hero_cta2">WhatsApp Us</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TRUST BAR ─── -->
+  <div class="trust-bar">
+    <div class="item" data-i18n="trust1">✅ Licensed & Insured</div>
+    <div class="item" data-i18n="trust2">⭐ 5-Star Rated</div>
+    <div class="item" data-i18n="trust3">🏠 12+ Years Experience</div>
+    <div class="item" data-i18n="trust4">🎨 100% Satisfaction Guarantee</div>
+    <div class="item" data-i18n="trust5">📞 Free Estimates</div>
+  </div>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="about-grid">
+      <img src="images/cards/pedro.jpg" alt="Pedro Macedo painting" class="about-img" />
+      <div class="about-text">
+        <div class="section-label" data-i18n="about_label">About Us</div>
+        <h2 data-i18n="about_title">Hi, I'm Pedro Macedo</h2>
+        <p data-i18n="about_p1">
+          With over 12 years of experience in residential and commercial painting, I built Macedo's Pro Painting on a
+          foundation of quality craftsmanship, reliability, and honest communication with every single client.
+        </p>
+        <p data-i18n="about_p2">
+          From a fresh coat on a single room to a full exterior transformation, we treat every project — big or small —
+          with the same level of care and attention to detail. We use only premium paints and materials to ensure a
+          long-lasting, beautiful finish.
+        </p>
+        <p data-i18n="about_p3">
+          Proudly serving <strong>Massachusetts (MA)</strong> and <strong>New Hampshire (NH)</strong> and surrounding areas.
+        </p>
+        <div class="about-badges">
+          <span class="badge" data-i18n="badge1">🛡️ Fully Insured</span>
+          <span class="badge" data-i18n="badge2">📋 Free Estimates</span>
+          <span class="badge" data-i18n="badge3">🌱 Eco-Friendly Options</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <div class="section-label" data-i18n="svc_label">What We Do</div>
+    <h2 class="section-title" data-i18n="svc_title">Our Services</h2>
+    <p class="section-subtitle" data-i18n="svc_sub">
+      We offer a full range of professional painting services tailored to your home or business needs.
+    </p>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🏠</span>
+        <h3 data-i18n="svc1_t">Interior Painting</h3>
+        <p data-i18n="svc1_d">Transform your living spaces with expert color consulting and flawless application. Bedrooms, living rooms, kitchens — we handle it all with minimal disruption to your daily routine.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏗️</span>
+        <h3 data-i18n="svc2_t">Exterior Painting</h3>
+        <p data-i18n="svc2_d">Boost your curb appeal and protect your home from New England's harsh weather. We pressure wash, prep, prime, and paint using weather-resistant coatings built to last.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🪵</span>
+        <h3 data-i18n="svc4_t">Cabinet & Trim Painting</h3>
+        <p data-i18n="svc4_d">Give your kitchen or bathroom a fresh new look without a full renovation. Smooth, factory-like finishes on cabinets, doors, and trim.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎨</span>
+        <h3 data-i18n="svc5_t">Deck & Fence Staining</h3>
+        <p data-i18n="svc5_d">Protect and beautify your outdoor wood surfaces with premium stains and sealers. Extends the life of your deck and fence significantly through every season.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🚿</span>
+        <h3 data-i18n="svc3_t">Power Washing</h3>
+        <p data-i18n="svc3_d">
+            Deep cleaning for driveways, decks, siding, and fences. Our professional power washing removes dirt, mold, and
+            stains, leaving your surfaces looking brand new across MA and NH.
+        </p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🪚</span>
+        <h3 data-i18n="svc6_t">Light Carpentry</h3>
+        <p data-i18n="svc6_d">
+            From installing baseboards and crown molding to fixing damaged wood trim, we handle light carpentry repairs that
+            complement our painting services for a perfect finish.
+        </p>
+       </div>
+    </div>
+  </section>
+
+  <!-- ─── PORTFOLIO ─── -->
+  <section id="portfolio">
+    <div class="section-label" data-i18n="port_label">Our Work</div>
+    <h2 class="section-title" data-i18n="port_title">Recent Projects</h2>
+    <p class="section-subtitle" data-i18n="port_sub">Click on any project to see more photos and videos.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-item" data-category="interior">
+        <img src="images/cards/interior.jpg" alt="Interior painting project" />
+        <div class="portfolio-overlay"><span data-i18n="cat_interior">🔍 Interior Painting</span></div>
+      </div>
+      <div class="portfolio-item" data-category="exterior">
+        <img src="images/cards/exterior.jpg" alt="Exterior painting project" />
+        <div class="portfolio-overlay"><span data-i18n="cat_exterior">🔍 Exterior Painting</span></div>
+      </div>
+      <div class="portfolio-item" data-category="cabinets">
+        <img src="images/cards/cabinet.jpg" alt="Cabinet painting" />
+        <div class="portfolio-overlay"><span data-i18n="cat_cabinets">🔍 Cabinet Painting</span></div>
+      </div>
+      <div class="portfolio-item" data-category="deck">
+        <img src="images/cards/deck.jpg" alt="Deck staining" />
+        <div class="portfolio-overlay"><span data-i18n="cat_deck">🔍 Deck Staining</span></div>
+      </div>
+      <div class="portfolio-item" data-category="power">
+        <img src="images/cards/power.jpg" alt="Power washing" />
+        <div class="portfolio-overlay"><span data-i18n="cat_power">🔍 Power Washing</span></div>
+      </div>
+      <div class="portfolio-item" data-category="carpentry">
+        <img src="images/cards/carpentry.jpg" alt="Light carpentry" />
+        <div class="portfolio-overlay"><span data-i18n="cat_carpentry">🔍 Light Carpentry</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHY US ─── -->
+  <section id="why">
+    <div class="section-label" data-i18n="why_label">Why Choose Us</div>
+    <h2 class="section-title" data-i18n="why_title">The Macedo's Difference</h2>
+    <p class="section-subtitle" data-i18n="why_sub">
+      We don't just paint walls — we deliver an experience from first call to final walkthrough.
+    </p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-number">12+</div>
+        <h4 data-i18n="why1_t">Years in Business</h4>
+        <p data-i18n="why1_d">A decade of quality painting and satisfied customers across MA and NH.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">500+</div>
+        <h4 data-i18n="why2_t">Projects Completed</h4>
+        <p data-i18n="why2_d">From small rooms to large commercial buildings, we've done it all.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">100%</div>
+        <h4 data-i18n="why3_t">Satisfaction Rate</h4>
+        <p data-i18n="why3_d">We don't consider a job done until you're completely happy.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">5★</div>
+        <h4 data-i18n="why4_t">Average Rating</h4>
+        <p data-i18n="why4_d">Consistently top-rated on Google across Massachusetts and New Hampshire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ─── -->
+  <section id="testimonials">
+    <div class="section-label" data-i18n="rev_label">Reviews</div>
+    <h2 class="section-title" data-i18n="rev_title">What Our Clients Say</h2>
+    <p class="section-subtitle" data-i18n="rev_sub">
+      Don't just take our word for it — here's what homeowners and businesses say about working with us.
+    </p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p data-i18n="rev1">"Pedro and his team did an amazing job on our entire first floor. Very professional, on time, and the results were stunning. We'll definitely hire them again!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JD</div>
+          <div class="author-info">
+            <strong>John D.</strong>
+            <span data-i18n="rev1_role">Homeowner — Manchester, NH</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p data-i18n="rev2">"We hired Macedo's for our office exterior. Excellent communication, fair pricing, and the paint job looks brand new. Highly recommend to any business owner!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SM</div>
+          <div class="author-info">
+            <strong>Sarah M.</strong>
+            <span data-i18n="rev2_role">Business Owner — Boston, MA</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p data-i18n="rev3">"Our kitchen cabinets look brand new. Pedro was meticulous and patient with our questions. The final result exceeded all our expectations. 5 stars!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RL</div>
+          <div class="author-info">
+            <strong>Robert L.</strong>
+            <span data-i18n="rev3_role">Homeowner — Nashua, NH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="section-label" data-i18n="cont_label">Get In Touch</div>
+    <h2 class="section-title" data-i18n="cont_title">Request a Free Quote</h2>
+    <p class="section-subtitle" data-i18n="cont_sub">
+      Fill out the form below or reach us directly. We usually respond within a few hours.
+    </p>
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <h3 data-i18n="cont_h3">Contact Pedro Macedo</h3>
+        <p data-i18n="cont_p">Ready to transform your space? Reach out and we'll schedule a free, no-obligation estimate at your convenience — serving all of MA and NH.</p>
+        <!-- Telefone para mensagens de texto -->
+        <div class="contact-item">
+        <span class="icon">💬</span>
+        <div class="detail">
+            <strong data-i18n="cont_phone_text">Text Message (SMS)</strong>
+            <a href="sms:+16039430060">(603) 943-0060</a>
+        </div>
+        </div>
+
+        <!-- Telefone para ligações -->
+        <div class="contact-item">
+        <span class="icon">📞</span>
+        <div class="detail">
+            <strong data-i18n="cont_phone_call">Phone Calls</strong>
+            <a href="tel:+16039217735">(603) 921-7735</a>
+        </div>
+        </div>
+        <div class="contact-item">
+          <span class="icon">📧</span>
+          <div class="detail">
+            <strong data-i18n="cont_email">Email</strong>
+            <a href="mailto:macedospropainting@gmail.com">macedospropainting@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="icon">📍</span>
+          <div class="detail">
+            <strong data-i18n="cont_area">Service Area</strong>
+            <span data-i18n="cont_area_val">Massachusetts (MA) & New Hampshire (NH)</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="icon">🕐</span>
+          <div class="detail">
+            <strong data-i18n="cont_hours">Hours</strong>
+            <span data-i18n="cont_hours_val">Mon–Sat: 7:00am – 6:00pm</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+
+            <!-- Botão SMS -->
+            <a href="sms:+16039430060" class="whatsapp-btn"
+                style="background:#12355B;">
+                <span style="font-size:1.2rem;">💬</span>
+                <span data-i18n="cont_sms">Send a Text</span>
+            </a>
+
+            <!-- Botão WhatsApp -->
+            <a href="https://wa.me/16039430060?text=Hi%20Pedro!%20I'd%20like%20to%20request%20a%20free%20painting%20quote."
+                class="whatsapp-btn" target="_blank">
+                <img src="whatsapp.svg" alt="WhatsApp" style="width:24px;height:24px;" />
+                <span data-i18n="cont_wa">Chat on WhatsApp</span>
+            </a>
+
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3 data-i18n="form_title">Get Your Free Estimate</h3>
+        <form action="https://formspree.io/f/XXXXXXXX" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="form_name">Full Name *</label>
+              <input type="text" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_phone">Phone Number *</label>
+              <input type="tel" name="phone" placeholder="(XXX) XXX-XXXX" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_email">Email Address *</label>
+            <input type="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_service">Service Needed</label>
+            <select name="service">
+              <option data-i18n="form_svc0">— Select a service —</option>
+              <option data-i18n="form_svc1">Interior Painting</option>
+              <option data-i18n="form_svc2">Exterior Painting</option>
+              <option data-i18n="form_svc3">Cabinet & Trim Painting</option>
+              <option data-i18n="form_svc4">Deck & Fence Staining</option>
+              <option data-i18n="form_svc5">Power Washing</option>
+              <option data-i18n="form_svc6">Light Carpentry</option>
+              <option data-i18n="form_svc7">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_details">Project Details</label>
+            <textarea name="message" placeholder="Tell us about your project..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit" data-i18n="form_submit">📋 Send My Request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logo_h.png" alt="Macedo's Pro Painting" />
+        <p data-i18n="foot_about">
+            Professional painting services you can trust across Massachusetts
+            and New Hampshire. Quality work, honest pricing, and a team that
+            cares about your home as much as you do.
+        </p>
+
+        <!-- REDES SOCIAIS -->
+        <div class="social-links">
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/macedos_pro_paint" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.31.975.975 1.247 2.242 1.31 3.608.058 1.266.07 1.646.07 4.849s-.012 3.583-.07 4.85c-.062 1.366-.334 2.633-1.31 3.608-.975.975-2.242 1.247-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.583-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.31-.975-.975-1.247-2.242-1.31-3.608C2.175 15.583 2.163 15.203 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.31-3.608.975-.975 2.242-1.247 3.608-1.31C8.417 2.175 8.797 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://facebook.com/macedos_pro_paint" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+            </svg>
+            </a>
+
+        </div>
+        </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_svc_h">Services</h4>
+        <ul>
+          <li><a href="#services" data-i18n="foot_svc1">Interior Painting</a></li>
+          <li><a href="#services" data-i18n="foot_svc2">Exterior Painting</a></li>
+          <li><a href="#services" data-i18n="foot_svc3">Cabinet Painting</a></li>
+          <li><a href="#services" data-i18n="foot_svc4">Deck Staining</a></li>
+          <li><a href="#services" data-i18n="foot_svc5">Power Washing</a></li>
+          <li><a href="#services" data-i18n="foot_svc6">Light Carpentry</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_links_h">Quick Links</h4>
+        <ul>
+          <li><a href="#about"        data-i18n="foot_l1">About Us</a></li>
+          <li><a href="#portfolio"    data-i18n="foot_l2">Portfolio</a></li>
+          <li><a href="#testimonials" data-i18n="foot_l3">Reviews</a></li>
+          <li><a href="#contact"      data-i18n="foot_l4">Free Quote</a></li>
+          <li><a href="https://wa.me/16039430060" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Macedo's Pro Painting. <span data-i18n="foot_rights">All rights reserved.</span></span>
+      <span data-i18n="foot_made">Made with ❤️ for Pedro Macedo</span>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/16039430060?text=Hi%20Pedro!%20I'd%20like%20to%20request%20a%20free%20painting%20quote."
+     class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <img src="whatsapp.svg" alt="WhatsApp" style="width:32px;height:32px;" />
+  </a>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-prev" id="lbPrev">&#8592;</button>
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lbClose">✕</button>
+      <img   id="lbImg"   src="" alt="" style="display:none;" />
+      <video id="lbVideo" controls style="display:none; max-width:100%; max-height:80vh; border-radius:6px;">
+        <source id="lbVideoSrc" src="" type="video/mp4" />
+      </video>
+      <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
+    <button class="lightbox-next" id="lbNext">&#8594;</button>
+  </div>
+
+    <script>
+  /* ── MENU ── */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  /* ── Navbar transparente → degradê azul ao rolar ── */
+  const navEl = document.querySelector('nav');
+
+  function handleNavScroll() {
+    if (window.scrollY > 10) {
+      navEl.classList.add('nav-scrolled');
+    } else {
+      navEl.classList.remove('nav-scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', handleNavScroll);
+  handleNavScroll();
+
+  /* ── Scroll to top ── */
+  const scrollBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  /* ── Smooth scroll nos links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  /* ── Animação de entrada ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity   = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card,.testimonial-card,.portfolio-item,.why-item').forEach(el => {
+    el.style.opacity    = '0';
+    el.style.transform  = 'translateY(30px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    obs.observe(el);
+  });
+
+  /* ── TRADUÇÕES ── */
+  const i18n = {
+    en: {
+      nav_about:"About", nav_services:"Services", nav_portfolio:"Portfolio",
+      nav_reviews:"Reviews", nav_quote:"Free Quote",
+      hero_line1:"Professional Painting", hero_line2:"You Can Trust",
+      hero_sub:"Quality interior and exterior painting services for residential and commercial properties. Proudly serving Massachusetts and New Hampshire.",
+      hero_cta1:"📋 Get a Free Quote", hero_cta2:"WhatsApp Us", hero_cta3:"Send a Text",
+      trust1:"✅ Licensed & Insured", trust2:"⭐ 5-Star Rated",
+      trust3:"🏠 12+ Years Experience", trust4:"🎨 100% Satisfaction Guarantee",
+      trust5:"📞 Free Estimates",
+      about_label:"About Us", about_title:"Hi, I'm Pedro Macedo",
+      about_p1:"With over 12 years of experience in residential and commercial painting, I built Macedo's Pro Painting on a foundation of quality craftsmanship, reliability, and honest communication with every single client.",
+      about_p2:"From a fresh coat on a single room to a full exterior transformation, we treat every project — big or small — with the same level of care and attention to detail. We use only premium paints and materials to ensure a long-lasting, beautiful finish.",
+      about_p3:"Proudly serving <strong>Massachusetts (MA)</strong> and <strong>New Hampshire (NH)</strong> and surrounding areas.",
+      badge1:"🛡️ Fully Insured", badge2:"📋 Free Estimates", badge3:"🌱 Eco-Friendly Options",
+      svc_label:"What We Do", svc_title:"Our Services",
+      svc_sub:"We offer a full range of professional painting services tailored to your home or business needs.",
+      svc1_t:"Interior Painting",
+      svc1_d:"Transform your living spaces with expert color consulting and flawless application. Bedrooms, living rooms, kitchens — we handle it all with minimal disruption to your daily routine.",
+      svc2_t:"Exterior Painting",
+      svc2_d:"Boost your curb appeal and protect your home from New England's harsh weather. We pressure wash, prep, prime, and paint using weather-resistant coatings built to last.",
+      svc3_t:"Power Washing",
+      svc3_d:"Deep cleaning for driveways, decks, siding, and fences. Our professional power washing removes dirt, mold, and stains, leaving your surfaces looking brand new across MA and NH.",
+      svc4_t:"Cabinet & Trim Painting",
+      svc4_d:"Give your kitchen or bathroom a fresh new look without a full renovation. Smooth, factory-like finishes on cabinets, doors, and trim.",
+      svc5_t:"Deck & Fence Staining",
+      svc5_d:"Protect and beautify your outdoor wood surfaces with premium stains and sealers. Extends the life of your deck and fence significantly through every season.",
+      svc6_t:"Light Carpentry",
+      svc6_d:"From installing baseboards and crown molding to fixing damaged wood trim, we handle light carpentry repairs that complement our painting services for a perfect finish.",
+      port_label:"Our Work", port_title:"Recent Projects",
+      port_sub:"Click on any project to see more photos and videos.",
+      cat_interior:"🔍 Interior Painting", cat_exterior:"🔍 Exterior Painting",
+      cat_cabinets:"🔍 Cabinet Painting", cat_deck:"🔍 Deck Staining",
+      cat_power:"🔍 Power Washing", cat_carpentry:"🔍 Light Carpentry",
+      why_label:"Why Choose Us", why_title:"The Macedo's Difference",
+      why_sub:"We don't just paint walls — we deliver an experience from first call to final walkthrough.",
+      why1_t:"Years in Business",  why1_d:"A decade of quality painting and satisfied customers across MA and NH.",
+      why2_t:"Projects Completed", why2_d:"From small rooms to large commercial buildings, we've done it all.",
+      why3_t:"Satisfaction Rate",  why3_d:"We don't consider a job done until you're completely happy.",
+      why4_t:"Average Rating",     why4_d:"Consistently top-rated on Google across Massachusetts and New Hampshire.",
+      rev_label:"Reviews", rev_title:"What Our Clients Say",
+      rev_sub:"Don't just take our word for it — here's what homeowners and businesses say about working with us.",
+      rev1:"\"Pedro and his team did an amazing job on our entire first floor. Very professional, on time, and the results were stunning. We'll definitely hire them again!\"",
+      rev1_role:"Homeowner — Manchester, NH",
+      rev2:"\"We hired Macedo's for our office exterior. Excellent communication, fair pricing, and the paint job looks brand new. Highly recommend to any business owner!\"",
+      rev2_role:"Business Owner — Boston, MA",
+      rev3:"\"Our kitchen cabinets look brand new. Pedro was meticulous and patient with our questions. The final result exceeded all our expectations. 5 stars!\"",
+      rev3_role:"Homeowner — Nashua, NH",
+      cont_label:"Get In Touch", cont_title:"Request a Free Quote",
+      cont_sub:"Fill out the form below or reach us directly. We usually respond within a few hours.",
+      cont_h3:"Contact Pedro Macedo",
+      cont_p:"Ready to transform your space? Reach out and we'll schedule a free, no-obligation estimate at your convenience — serving all of MA and NH.",
+      cont_phone_text:"Text Message (SMS)", cont_phone_call:"Phone Calls", cont_email:"Email",
+      cont_area:"Service Area", cont_area_val:"Massachusetts (MA) & New Hampshire (NH)",
+      cont_hours:"Hours", cont_hours_val:"Mon–Sat: 7:00am – 6:00pm",
+      cont_wa:"Chat on WhatsApp", cont_sms:"Send a Text",
+      form_title:"Get Your Free Estimate",
+      form_name:"Full Name *", form_phone:"Phone Number *", form_email:"Email Address *",
+      form_service:"Service Needed",
+      form_svc0:"— Select a service —",
+      form_svc1:"Interior Painting", form_svc2:"Exterior Painting", form_svc3:"Cabinet & Trim Painting",
+      form_svc4:"Deck & Fence Staining", form_svc5:"Power Washing",
+      form_svc6:"Light Carpentry", form_svc7:"Other",
+      form_details:"Project Details", form_submit:"📋 Send My Request",
+      foot_about:"Professional painting services you can trust across Massachusetts and New Hampshire. Quality work, honest pricing, and a team that cares about your home as much as you do.",
+      foot_svc_h:"Services", foot_links_h:"Quick Links",
+      foot_svc1:"Interior Painting", foot_svc2:"Exterior Painting",
+      foot_svc3:"Cabinet Painting", foot_svc4:"Deck Staining", foot_svc5:"Power Washing", foot_svc6:"Light Carpentry",
+      foot_l1:"About Us", foot_l2:"Portfolio", foot_l3:"Reviews", foot_l4:"Free Quote",
+      foot_rights:"All rights reserved.", foot_made:"Made with ❤️ for Pedro Macedo"
+    },
+
+    pt: {
+      nav_about:"Sobre", nav_services:"Serviços", nav_portfolio:"Portfólio",
+      nav_reviews:"Avaliações", nav_quote:"Orçamento",
+      hero_line1:"Pintura Profissional", hero_line2:"em Quem Você Pode Confiar",
+      hero_sub:"Serviços de pintura interna e externa para residências e comércios. Atendendo com orgulho Massachusetts e New Hampshire.",
+      hero_cta1:"📋 Peça um Orçamento Gratuito", hero_cta2:"Fale no WhatsApp", hero_cta3:"Envie uma SMS",
+      trust1:"✅ Licenciado e Segurado", trust2:"⭐ Avaliações 5 Estrelas",
+      trust3:"🏠 +10 Anos de Experiência", trust4:"🎨 Garantia de 100% de Satisfação",
+      trust5:"📞 Orçamentos Gratuitos",
+      about_label:"Quem Somos", about_title:"Olá, eu sou o Pedro Macedo",
+      about_p1:"Com mais de 12 anos de experiência em pintura residencial e comercial, construí a Macedo's Pro Painting com base em qualidade, pontualidade e comunicação honesta com cada cliente.",
+      about_p2:"De uma simples demão em um cômodo até a transformação completa de uma fachada, tratamos cada projeto — grande ou pequeno — com o mesmo cuidado e atenção aos detalhes. Utilizamos apenas tintas e materiais de alta qualidade para um acabamento bonito e duradouro.",
+      about_p3:"Atendendo com orgulho <strong>Massachusetts (MA)</strong> e <strong>New Hampshire (NH)</strong> e regiões próximas.",
+      badge1:"🛡️ Totalmente Segurado", badge2:"📋 Orçamentos Gratuitos", badge3:"🌱 Opções Sustentáveis",
+      svc_label:"O Que Fazemos", svc_title:"Nossos Serviços",
+      svc_sub:"Oferecemos uma linha completa de serviços de pintura profissionais para sua casa ou negócio.",
+      svc1_t:"Pintura Interior",
+      svc1_d:"Transforme seus ambientes com consultoria de cores e aplicação impecável. Quartos, salas, cozinhas — cuidamos de tudo com o mínimo de impacto na sua rotina.",
+      svc2_t:"Pintura Exterior",
+      svc2_d:"Valorize a fachada e proteja sua casa do clima rigoroso da Nova Inglaterra. Lavagem, preparação, primer e pintura com revestimentos resistentes ao tempo.",
+      svc3_t:"Lavagem com Pressão",
+      svc3_d:"Limpeza profunda de calçadas, decks, revestimentos e cercas. Nossa lavagem com pressão remove sujeira, mofo e manchas, deixando suas superfícies como novas em MA e NH.",
+      svc4_t:"Pintura de Armários e Guarnições",
+      svc4_d:"Dê uma cara nova à sua cozinha ou banheiro sem uma reforma completa. Acabamentos lisos, com aspecto de fábrica, em armários, portas e guarnições.",
+      svc5_t:"Staining de Deck e Cercas",
+      svc5_d:"Proteja e valorize suas áreas externas de madeira com stains e seladores de alta qualidade. Prolonga a vida útil do deck e da cerca em todas as estações.",
+      svc6_t:"Pequenos Reparos (Carpintaria)",
+      svc6_d:"Da instalação de rodapés e molduras à correção de danos em madeira, realizamos reparos de carpintaria leve que complementam nossos serviços de pintura para um acabamento perfeito.",
+      port_label:"Nosso Trabalho", port_title:"Projetos Recentes",
+      port_sub:"Clique em qualquer projeto para ver mais fotos e vídeos.",
+      cat_interior:"🔍 Pintura Interior", cat_exterior:"🔍 Pintura Exterior",
+      cat_cabinets:"🔍 Pintura de Armários", cat_deck:"🔍 Staining de Deck",
+      cat_power:"🔍 Lavagem com Pressão", cat_carpentry:"🔍 Pequenos Reparos (Carpintaria)",
+      why_label:"Por que nos escolher", why_title:"O Diferencial da Macedo's",
+      why_sub:"Não pintamos apenas paredes — entregamos uma experiência do primeiro contato à vistoria final.",
+      why1_t:"Anos de Experiência",  why1_d:"Uma década de pintura de qualidade e clientes satisfeitos em MA e NH.",
+      why2_t:"Projetos Concluídos",  why2_d:"De pequenos cômodos a grandes prédios comerciais, já fizemos de tudo.",
+      why3_t:"Índice de Satisfação", why3_d:"Só consideramos o serviço concluído quando você está 100% satisfeito.",
+      why4_t:"Avaliação Média",      why4_d:"Sempre bem avaliados no Google em Massachusetts e New Hampshire.",
+      rev_label:"Avaliações", rev_title:"O que nossos clientes dizem",
+      rev_sub:"Não acredite só na nossa palavra — veja o que moradores e empresas falam sobre trabalhar conosco.",
+      rev1:"\"Pedro e sua equipe fizeram um trabalho incrível em todo o primeiro andar. Muito profissionais, pontuais e o resultado ficou impecável. Com certeza vamos contratar novamente!\"",
+      rev1_role:"Proprietário — Manchester, NH",
+      rev2:"\"Contratamos a Macedo's para pintar o exterior do nosso escritório. Excelente comunicação, preço justo e o prédio parece novo. Recomendo fortemente a qualquer empresário!\"",
+      rev2_role:"Empresária — Boston, MA",
+      rev3:"\"Nossos armários de cozinha ficaram como novos. Pedro foi caprichoso e paciente com todas as nossas dúvidas. O resultado final superou todas as expectativas. 5 estrelas!\"",
+      rev3_role:"Proprietário — Nashua, NH",
+      cont_label:"Fale Conosco", cont_title:"Peça um Orçamento Gratuito",
+      cont_sub:"Preencha o formulário abaixo ou fale direto com a gente. Normalmente respondemos em poucas horas.",
+      cont_h3:"Fale com Pedro Macedo",
+      cont_p:"Pronto para transformar seu espaço? Entre em contato e vamos agendar uma visita para orçamento gratuito — atendendo todo o estado de MA e NH.",
+      cont_phone_text:"Mensagem de Texto (SMS)", cont_phone_call:"Ligações", cont_email:"E-mail",
+      cont_area:"Área de Atuação", cont_area_val:"Massachusetts (MA) & New Hampshire (NH)",
+      cont_hours:"Horário", cont_hours_val:"Seg–Sáb: 7h00 – 18h00",
+      cont_wa:"Fale no WhatsApp", cont_sms:"Envie uma SMS",
+      form_title:"Receba seu Orçamento Gratuito",
+      form_name:"Nome Completo *", form_phone:"Telefone *", form_email:"E-mail *",
+      form_service:"Serviço Necessário",
+      form_svc0:"— Selecione um serviço —",
+      form_svc1:"Pintura Interior", form_svc2:"Pintura Exterior", form_svc3:"Pintura de Armários e Guarnições",
+      form_svc4:"Staining de Deck e Cercas", form_svc5:"Lavagem com Pressão",
+      form_svc6:"Pequenos Reparos (Carpintaria)", form_svc7:"Outro",
+      form_details:"Detalhes do Projeto",
+      form_submit:"📋 Enviar Pedido de Orçamento",
+      foot_about:"Serviços de pintura profissional em que você pode confiar em Massachusetts e New Hampshire. Trabalho de qualidade, preço justo e uma equipe que cuida da sua casa como se fosse nossa.",
+      foot_svc_h:"Serviços", foot_links_h:"Links Rápidos",
+      foot_svc1:"Pintura Interior", foot_svc2:"Pintura Exterior",
+      foot_svc3:"Pintura de Armários", foot_svc4:"Staining de Deck", foot_svc5:"Lavagem com Pressão", foot_svc6:"Pequenos Reparos (Carpintaria)",
+      foot_l1:"Quem Somos", foot_l2:"Portfólio", foot_l3:"Avaliações", foot_l4:"Orçamento Gratuito",
+      foot_rights:"Todos os direitos reservados.", foot_made:"Feito com ❤️ para Pedro Macedo"
+    }
+  };
+
+  function setLang(lang) {
+    const dict = i18n[lang] || i18n.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (!dict[key]) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = dict[key];
+      } else if (el.tagName === 'OPTION') {
+        el.textContent = dict[key];
+      } else {
+        el.innerHTML = dict[key];
+      }
+    });
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
+    document.documentElement.lang = lang;
+  }
+
+  /* ── GALERIA — photos.json + suporte a vídeo ── */
+  let photosData  = {};
+  let currentList = [];
+  let currentIndex = 0;
+
+  const lb         = document.getElementById('lightbox');
+  const lbImg      = document.getElementById('lbImg');
+  const lbVideo    = document.getElementById('lbVideo');
+  const lbVideoSrc = document.getElementById('lbVideoSrc');
+  const lbCaption  = document.getElementById('lbCaption');
+  const lbClose    = document.getElementById('lbClose');
+  const lbPrev     = document.getElementById('lbPrev');
+  const lbNext     = document.getElementById('lbNext');
+
+  const VIDEO_EXTS = ['mp4','webm','mov','ogg'];
+
+  function isVideo(src) {
+    const ext = src.split('.').pop().toLowerCase();
+    return VIDEO_EXTS.includes(ext);
+  }
+
+  fetch('photos.json')
+    .then(r => r.json())
+    .then(data => { photosData = data; })
+    .catch(() => {});
+
+  document.querySelectorAll('.portfolio-item[data-category]').forEach(card => {
+    card.addEventListener('click', () => {
+      const cat  = card.dataset.category;
+      const list = photosData[cat];
+      if (!list || !list.length) {
+        alert('Em breve teremos mais fotos e vídeos de nossos projetos!');
+        return;
+      }
+      currentList  = list;
+      currentIndex = 0;
+      openLightbox();
+    });
+  });
+
+  function openLightbox() {
+    const item = currentList[currentIndex];
+    if (!item) return;
+
+    if (isVideo(item.src)) {
+      lbImg.style.display   = 'none';
+      lbVideo.style.display = 'block';
+      lbVideoSrc.src = item.src;
+      lbVideo.load();
+    } else {
+      lbVideo.pause();
+      lbVideo.style.display = 'none';
+      lbImg.style.display   = 'block';
+      lbImg.src = item.src;
+      lbImg.alt = item.alt || '';
+    }
+
+    lbCaption.textContent = item.caption || '';
+    lbPrev.style.visibility = currentList.length > 1 ? 'visible' : 'hidden';
+    lbNext.style.visibility = currentList.length > 1 ? 'visible' : 'hidden';
+
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    lbVideo.pause();
+    lbImg.src      = '';
+    lbVideoSrc.src = '';
+    document.body.style.overflow = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', e => {
+    if (e.target === lb) closeLightbox();
+  });
+
+  lbPrev.addEventListener('click', e => {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+    openLightbox();
+  });
+
+  lbNext.addEventListener('click', e => {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % currentList.length;
+    openLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') {
+      currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+      openLightbox();
+    }
+    if (e.key === 'ArrowRight') {
+      currentIndex = (currentIndex + 1) % currentList.length;
+      openLightbox();
+    }
+  });
+
+  /* ── idioma inicial ── */
+  setLang('en');
+  </script>
+</body>
+</html>

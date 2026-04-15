@@ -1,0 +1,58 @@
+{
+  "interior": [
+    {
+      "src": "images/interior/1.jpeg",
+      "caption": "Living room repaint — Nashua, NH",
+      "alt": "Freshly painted living room in Nashua, NH"
+    },
+    { "src": "images/interior/2.jpeg" },
+      { "src": "images/interior/3.jpeg" },
+      { "src": "images/interior/4.jpeg" },
+      { "src": "images/interior/5.jpeg" }
+  ],
+  "exterior": [
+    {"src": "images/exterior/1.jpeg" }, 
+    {"src": "images/exterior/2.jpeg" }, 
+    {"src": "images/exterior/3.jpeg" }, 
+    {"src": "images/exterior/4.jpeg" }, 
+    {"src": "images/exterior/5.jpeg" }, 
+    {"src": "images/exterior/6.jpeg" }, 
+    {"src": "images/exterior/7.jpeg" }, 
+    {"src": "images/exterior/8.jpeg" }, 
+    {"src": "images/exterior/9.jpeg" }
+  ],
+  "cabinets": [
+    {
+      "src": "images/cabinets/1.jpg",
+      "caption": "BEFORE AND AFTER - Kitchen cabinet "},
+      { "src": "images/cabinets/2.jpg" },
+      { "src": "images/cabinets/3.jpg" },
+      { "src": "images/cabinets/4.jpg" },
+      { "src": "images/cabinets/1.mp4" }
+  ],
+  "deck": [  ],
+  "power": [
+    { "src": "images/power/1.jpeg", "caption": "Power washing — Dracut, MA" },
+    { "src": "images/power/2.jpeg" },
+    { "src": "images/power/3.jpeg" },
+    { "src": "images/power/4.jpeg" },
+    { "src": "images/power/5.jpeg" },
+    { "src": "images/power/6.jpeg" },
+    { "src": "images/power/7.jpeg" },
+    { "src": "images/power/8.jpeg" },
+    { "src": "images/power/9.jpeg" }
+  ],
+  "carpentry": [
+    { "src": "images/carpentry/1.jpeg" }, 
+    { "src": "images/carpentry/2.jpeg" }, 
+    { "src": "images/carpentry/3.jpeg" }, 
+    { "src": "images/carpentry/4.jpeg" }, 
+    { "src": "images/carpentry/5.jpeg" }, 
+    { "src": "images/carpentry/6.jpeg" }, 
+    { "src": "images/carpentry/7.jpeg" }, 
+    { "src": "images/carpentry/8.jpeg" }, 
+    { "src": "images/carpentry/9.jpeg" }, 
+    { "src": "images/carpentry/10.jpeg" },
+    { "src": "images/carpentry/11.jpeg" }
+  ]
+}
